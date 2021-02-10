@@ -1,0 +1,12 @@
+{
+  "name": "ngx-sentiment",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^11.1.2",
+    "@angular/core": "^11.1.2"
+  },
+  "dependencies": {
+    "@tensorflow-models/toxicity": "^1.2.2",
+    "tslib": "^2.0.0"
+  }
+}
