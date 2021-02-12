@@ -4,4 +4,5 @@
 
 export * from './lib/ngx-sentiment.service';
 export * from './lib/ngx-sentiment.component';
+export * from './lib/ngx-sentiment.pipe';
 export * from './lib/ngx-sentiment.module';

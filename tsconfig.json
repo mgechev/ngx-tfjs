@@ -10,11 +10,12 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
+    "skipLibCheck": true,
     "downlevelIteration": true,
     "paths": {
       "ngx-sentiment": [
-        "dist/ngx-sentiment/ngx-sentiment",
-        "dist/ngx-sentiment"
+        "projects/ngx-sentiment/ngx-sentiment",
+        "projects/ngx-sentiment"
       ]
     },
     "experimentalDecorators": true,

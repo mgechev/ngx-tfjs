@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
-import { NgxSentimentComponent } from './ngx-sentiment.component';
+import { SentimentPipe } from './ngx-sentiment.pipe';
+import { SentimentService } from './ngx-sentiment.service';
 
 
 
 @NgModule({
-  declarations: [NgxSentimentComponent],
-  imports: [
-  ],
-  exports: [NgxSentimentComponent]
+  declarations: [SentimentPipe],
+  providers: [SentimentService],
+  exports: [SentimentPipe]
 })
 export class NgxSentimentModule { }

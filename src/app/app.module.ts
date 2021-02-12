@@ -1,16 +1,22 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgxSentimentModule } from 'projects/ngx-sentiment/src/public-api';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { EmojifyPipe } from './emojify.pipe';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EmojifyPipe
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxSentimentModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NgxSentimentService } from './ngx-sentiment.service';
+import { SentimentService } from './ngx-sentiment.service';
 
-describe('NgxSentimentService', () => {
-  let service: NgxSentimentService;
+describe('SentimentService', () => {
+  let service: SentimentService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(NgxSentimentService);
+    service = TestBed.inject(SentimentService);
   });
 
   it('should be created', () => {
