@@ -1,27 +1,28 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { Value, Label } from 'projects/ngx-sentiment/src/public-api';
+import { Value } from 'projects/ngx-sentiment/src/public-api';
 
-const labels: {[label in Label]: string} = {
-  identity_attack: '😡',
-  insult: '🤬',
-  obscene: '🤐',
-  sexual_explicit: '😦',
-  toxicity: '😒',
-  threat: '⛔️'
-};
+const labels = [
+  '😊',
+  '😒',
+  '🤐',
+  '😦',
+  '😡',
+  '🤬',
+  '⛔️'
+];
 
 @Pipe({
   name: 'emojify',
 })
 export class EmojifyPipe implements PipeTransform {
   transform(value: Value) {
-    console.log(value);
     if (!value) {
       return '😑';
     }
-    if (!value.match) {
+    const matches = value.reduce((total, a) => a.match ? ++total : total, 0);
+    if (!matches) {
       return '😊';
     }
-    return labels[value.label];
+    return labels[matches];
   }
 }

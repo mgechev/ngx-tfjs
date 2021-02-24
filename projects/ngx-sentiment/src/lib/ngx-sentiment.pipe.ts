@@ -1,5 +1,7 @@
-import { ChangeDetectorRef, Pipe, PipeTransform } from '@angular/core';
-import { SentimentService, Prediction } from './ngx-sentiment.service';
+import { Pipe, PipeTransform } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Prediction } from './model';
+import { SentimentService } from './ngx-sentiment.service';
 
 const enum State {
   Unavailable,
@@ -14,36 +16,47 @@ export type Value = Prediction[] | null;
   pure: false,
 })
 export class SentimentPipe implements PipeTransform {
-  private _latestValue: Promise<Value> = Promise.resolve(null);
+  private _latestValue = new BehaviorSubject<Value>(null);
   private _latestInput: string | undefined = undefined;
   private _state = State.Unavailable;
   private _lastThreshold = 0.9;
+  private _timeout = false;
 
-  constructor(
-    private _model: SentimentService,
-    private _cd: ChangeDetectorRef
-  ) {}
+  constructor(private _model: SentimentService) {}
 
-  transform(input: string, threshold: number = 0.9): Promise<Value> {
+  transform(input: string, threshold: number = 0.9): Observable<Value> {
+    if (this._timeout) {
+      return this._latestValue;
+    }
+    this._timeout = true;
+    setTimeout(() => {
+      this._predict(input, threshold);
+      this._timeout = false;
+    }, 1000);
+    return this._latestValue;
+  }
+
+  private _predict(input: string, threshold: number) {
     if (threshold !== this._lastThreshold) {
       this._state = State.Unavailable;
     }
     if (this._state === State.Initializing) {
-      return this._latestValue;
+      return;
     }
     if (this._state === State.Unavailable) {
       this._lastThreshold = threshold;
       this._state = State.Initializing;
-      this._model.setThreshold(threshold).then(() => {
+      this._model.init(threshold).then(() => {
         this._state = State.Ready;
-        this._cd.detectChanges();
       });
-      return this._latestValue;
+      return;
     }
     if (input === this._latestInput) {
-      return this._latestValue;
+      return;
     }
     this._latestInput = input;
-    return this._latestValue = this._model.classify([input]);
+    this._model.classify([input]).then((val) => {
+      this._latestValue.next(val);
+    });
   }
 }
