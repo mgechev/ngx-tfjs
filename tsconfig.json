@@ -13,7 +13,7 @@
     "skipLibCheck": true,
     "downlevelIteration": true,
     "paths": {
-      "ngx-sentiment": [
+      "ngx-ml": [
         "projects/ngx-ml/ngx-sentiment",
         "projects/ngx-ml"
       ]

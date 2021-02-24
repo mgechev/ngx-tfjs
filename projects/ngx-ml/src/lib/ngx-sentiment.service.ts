@@ -103,7 +103,6 @@ export class SentimentService implements OnDestroy {
         'Make sure you set the model threshold before invoking classify'
       );
     }
-    console.log(sentences);
     return this._bus
       .request({ type: PayloadType.Classify, sentences })
       .then(({ data }: { data: ModelPayload }) => {

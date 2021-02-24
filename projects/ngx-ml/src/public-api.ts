@@ -2,7 +2,6 @@
  * Public API Surface of ngx-sentiment
  */
 
-export * from './lib/ngx-sentiment.service';
-export * from './lib/ngx-sentiment.component';
-export * from './lib/ngx-sentiment.pipe';
-export * from './lib/ngx-sentiment.module';
+export { Label, Prediction, SentimentService } from './lib/ngx-sentiment.service';
+export { SentimentPipe, Value } from './lib/ngx-sentiment.pipe';
+export { NgxSentimentModule } from './lib/ngx-sentiment.module';
