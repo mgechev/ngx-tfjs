@@ -1,5 +1,5 @@
 {
-  "name": "ngx-sentiment",
+  "name": "ngx-ml",
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^11.1.2",

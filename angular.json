@@ -126,38 +126,38 @@
         }
       }
     },
-    "ngx-sentiment": {
+    "ngx-ml": {
       "projectType": "library",
-      "root": "projects/ngx-sentiment",
-      "sourceRoot": "projects/ngx-sentiment/src",
+      "root": "projects/ngx-ml",
+      "sourceRoot": "projects/ngx-ml/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/ngx-sentiment/tsconfig.lib.json",
-            "project": "projects/ngx-sentiment/ng-package.json"
+            "tsConfig": "projects/ngx-ml/tsconfig.lib.json",
+            "project": "projects/ngx-ml/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-sentiment/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngx-ml/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-sentiment/src/test.ts",
-            "tsConfig": "projects/ngx-sentiment/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-sentiment/karma.conf.js"
+            "main": "projects/ngx-ml/src/test.ts",
+            "tsConfig": "projects/ngx-ml/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-ml/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ngx-sentiment/tsconfig.lib.json",
-              "projects/ngx-sentiment/tsconfig.spec.json"
+              "projects/ngx-ml/tsconfig.lib.json",
+              "projects/ngx-ml/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"

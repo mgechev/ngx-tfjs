@@ -14,8 +14,8 @@
     "downlevelIteration": true,
     "paths": {
       "ngx-sentiment": [
-        "projects/ngx-sentiment/ngx-sentiment",
-        "projects/ngx-sentiment"
+        "projects/ngx-ml/ngx-sentiment",
+        "projects/ngx-ml"
       ]
     },
     "experimentalDecorators": true,

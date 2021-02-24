@@ -1,5 +1,5 @@
 import { PipeTransform, Pipe } from '@angular/core';
-import { Value } from 'projects/ngx-sentiment/src/public-api';
+import { Value } from 'projects/ngx-ml/src/public-api';
 
 const labels = [
   '😊',
