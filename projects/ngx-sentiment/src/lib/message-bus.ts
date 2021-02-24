@@ -20,20 +20,25 @@ export class MessageBus<Data> {
     { resolve: Callback<Data>; reject: Callback<Data> }
   >();
 
+  private _messageHandler({ data }: { data: Message<Data> }) {
+    const callbacks = this._callbacks.get(data.id);
+    if (!callbacks) {
+      console.warn('No callback for ', data.id);
+      return;
+    }
+    if (!data.error) {
+      callbacks.resolve(data);
+    } else {
+      callbacks.reject(data);
+    }
+    this._callbacks.delete(data.id);
+  }
+
   constructor(private _worker: Worker) {
-    this._worker.addEventListener('message', ({ data }) => {
-      const callbacks = this._callbacks.get(data.id);
-      if (!callbacks) {
-        console.warn('No callback for ', data.id);
-        return;
-      }
-      if (!data.error) {
-        callbacks.resolve(data);
-      } else {
-        callbacks.reject(data);
-      }
-      this._callbacks.delete(data.id);
-    });
+    this._worker.addEventListener(
+      'message',
+      (this._messageHandler = this._messageHandler.bind(this))
+    );
   }
 
   request(data: Data): Promise<Message<Data>> {
@@ -42,5 +47,10 @@ export class MessageBus<Data> {
       this._callbacks.set(id, { resolve, reject });
       this._worker.postMessage({ id, data });
     });
+  }
+
+  destroy() {
+    this._worker.removeEventListener('message', this._messageHandler);
+    this._callbacks = new Map();
   }
 }

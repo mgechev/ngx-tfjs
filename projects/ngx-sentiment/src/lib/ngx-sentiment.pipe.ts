@@ -1,7 +1,6 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import { OnDestroy, Pipe, PipeTransform } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Prediction } from './model';
-import { SentimentService } from './ngx-sentiment.service';
+import { SentimentService, Prediction } from './ngx-sentiment.service';
 
 const enum State {
   Unavailable,
@@ -15,7 +14,7 @@ export type Value = Prediction[] | null;
   name: 'sentiment',
   pure: false,
 })
-export class SentimentPipe implements PipeTransform {
+export class SentimentPipe implements PipeTransform, OnDestroy {
   private _latestValue = new BehaviorSubject<Value>(null);
   private _latestInput: string | undefined = undefined;
   private _state = State.Unavailable;
@@ -34,6 +33,10 @@ export class SentimentPipe implements PipeTransform {
       this._timeout = false;
     }, 1000);
     return this._latestValue;
+  }
+
+  ngOnDestroy() {
+    this._model.ngOnDestroy();
   }
 
   private _predict(input: string, threshold: number) {
