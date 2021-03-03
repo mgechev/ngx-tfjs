@@ -13,9 +13,9 @@
     "skipLibCheck": true,
     "downlevelIteration": true,
     "paths": {
-      "ngx-ml": [
-        "projects/ngx-ml/ngx-sentiment",
-        "projects/ngx-ml"
+      "ngx-tfjs": [
+        "projects/ngx-tfjs/ngx-sentiment",
+        "projects/ngx-tfjs"
       ]
     },
     "experimentalDecorators": true,

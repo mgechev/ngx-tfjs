@@ -1,35 +1,13 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { MessageBus } from './message-bus';
-
-export type Label =
-  | 'identity_attack'
-  | 'insult'
-  | 'threat'
-  | 'sexual_explicit'
-  | 'obscene'
-  | 'toxicity';
-
-type ModelPrediction = {
-  label: Label;
-  results: {
-    probabilities: Float32Array;
-    match: boolean;
-  }[];
-};
+import { MessageBus } from '../message-bus';
 
 export interface Prediction {
-  label: Label;
-  match: boolean;
-  probabilities: Float32Array[];
+  text: string;
+  startIndex: number;
+  endIndex: number;
+  score: number;
 }
 
-const transform = (prediction: ModelPrediction): Prediction => {
-  return {
-    label: prediction.label as Label,
-    match: prediction.results.reduce((a: boolean, c) => a || c.match, false),
-    probabilities: prediction.results.map((p) => p.probabilities),
-  } as Prediction;
-};
 
 const enum PayloadType {
   Init = 'init',
@@ -39,21 +17,21 @@ const enum PayloadType {
 
 const workerScript = `
 importScripts('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs');
-importScripts('https://cdn.jsdelivr.net/npm/@tensorflow-models/toxicity');
+importScripts('https://cdn.jsdelivr.net/npm/@tensorflow-models/qna');
 
 let model = null;
 self.addEventListener('message', (e) => {
   if (e.data.data && e.data.data.init) {
     model = null;
-    toxicity.load(e.data.data.threshold).then(m => {
+    qna.load().then(m => {
       model = m;
       self.postMessage({ id: e.data.id, data: {init: true, type: '${PayloadType.Init}' }});
     });
   }
-  if (e.data.data && e.data.data.sentences && model) {
-    model.classify(e.data.data.sentences)
-      .then(predictions => {
-        self.postMessage({ id: e.data.id, data: { predictions, type: '${PayloadType.Classified}' }});
+  if (e.data.data && e.data.data.question && model) {
+    model.findAnswers(e.data.data.question, e.data.data.passage)
+      .then(answers => {
+        self.postMessage({ id: e.data.id, data: { answers, type: '${PayloadType.Classified}' }});
       });
   }
 });
@@ -62,17 +40,17 @@ self.addEventListener('message', (e) => {
 interface Initialization {
   type: PayloadType.Init;
   init: boolean;
-  threshold: number;
 }
 
 interface Classify {
   type: PayloadType.Classify;
-  sentences: string[];
+  passage: string;
+  question: string;
 }
 
 interface Classified {
   type: PayloadType.Classified;
-  predictions: ModelPrediction[];
+  answers: Prediction[];
 }
 
 type ModelPayload = Initialization | Classify | Classified;
@@ -80,7 +58,7 @@ type ModelPayload = Initialization | Classify | Classified;
 @Injectable({
   providedIn: 'root'
 })
-export class SentimentService implements OnDestroy {
+export class QnAService implements OnDestroy {
   private _bus: MessageBus<ModelPayload>;
   private _initialized = false;
 
@@ -89,25 +67,25 @@ export class SentimentService implements OnDestroy {
     this._bus = new MessageBus(new Worker(window.URL.createObjectURL(blob)));
   }
 
-  async init(threshold: number) {
+  async init() {
     const { data } = await this._bus
-      .request({ threshold, init: true, type: PayloadType.Init });
+      .request({ init: true, type: PayloadType.Init });
     if (data.type === PayloadType.Init && data.init) {
       this._initialized = true;
     }
   }
 
-  async classify(sentences: string[]): Promise<Prediction[]> {
+  async findAnswers(passage: string, question: string): Promise<Prediction[]> {
     if (!this._initialized) {
       throw new Error(
         'Make sure you set the model threshold before invoking classify'
       );
     }
     return this._bus
-      .request({ type: PayloadType.Classify, sentences })
+      .request({ type: PayloadType.Classify, passage, question })
       .then(({ data }: { data: ModelPayload }) => {
         if (data.type === PayloadType.Classified) {
-          return data.predictions.map(transform);
+          return data.answers;
         }
         return [];
       });

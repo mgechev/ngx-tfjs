@@ -1,3 +1,2 @@
-<textarea [(ngModel)]="text"></textarea>
-
-<h1>{{ text | sentiment | async | emojify }}</h1>
+<input [(ngModel)]="text">
+<span>{{ text | toxicity | async | emojify }}</span>
