@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-tfjs": {
+    "ngx-tfjs-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-tfjs",
+            "outputPath": "dist/ngx-tfjs-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -68,18 +68,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-tfjs:build"
+            "browserTarget": "ngx-tfjs-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-tfjs:build:production"
+              "browserTarget": "ngx-tfjs-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-tfjs:build"
+            "browserTarget": "ngx-tfjs-app:build"
           }
         },
         "test": {
@@ -116,48 +116,48 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-tfjs:serve"
+            "devServerTarget": "ngx-tfjs-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ngx-tfjs:serve:production"
+              "devServerTarget": "ngx-tfjs-app:serve:production"
             }
           }
         }
       }
     },
-    "ngx-ml": {
+    "ngx-tfjs": {
       "projectType": "library",
-      "root": "projects/ngx-ml",
-      "sourceRoot": "projects/ngx-ml/src",
+      "root": "projects/ngx-tfjs",
+      "sourceRoot": "projects/ngx-tfjs/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "tsConfig": "projects/ngx-ml/tsconfig.lib.json",
-            "project": "projects/ngx-ml/ng-package.json"
+            "tsConfig": "projects/ngx-tfjs/tsconfig.lib.json",
+            "project": "projects/ngx-tfjs/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngx-ml/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ngx-tfjs/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngx-ml/src/test.ts",
-            "tsConfig": "projects/ngx-ml/tsconfig.spec.json",
-            "karmaConfig": "projects/ngx-ml/karma.conf.js"
+            "main": "projects/ngx-tfjs/src/test.ts",
+            "tsConfig": "projects/ngx-tfjs/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-tfjs/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ngx-ml/tsconfig.lib.json",
-              "projects/ngx-ml/tsconfig.spec.json"
+              "projects/ngx-tfjs/tsconfig.lib.json",
+              "projects/ngx-tfjs/tsconfig.spec.json"
             ],
             "exclude": [
               "**/node_modules/**"
@@ -167,5 +167,5 @@
       }
     }
   },
-  "defaultProject": "ngx-tfjs"
+  "defaultProject": "ngx-tfjs-app"
 }

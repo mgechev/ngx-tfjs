@@ -1,2 +1,5 @@
 <input [(ngModel)]="text">
 <span>{{ text | toxicity | async | emojify }}</span>
+
+<br><br>
+<span>{{ passage | qna: question | async | json }}</span>
