@@ -6,9 +6,6 @@
     "@angular/core": "^11.1.2"
   },
   "dependencies": {
-    "@tensorflow-models/toxicity": "^1.2.2",
-    "@tensorflow/tfjs-converter": "^3.0.0",
-    "@tensorflow/tfjs-core": "^3.0.0",
     "tslib": "^2.0.0"
   }
 }
