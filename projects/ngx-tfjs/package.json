@@ -1,11 +1,23 @@
 {
   "name": "ngx-tfjs",
   "version": "0.0.1",
+  "scripts": {
+    "build": "ng build ngx-tfjs --configuration=production && ../../node_modules/.bin/tsc -p tsconfig.schematics.json",
+    "schematics:build:copy": "cpx \"schematics/**/{collection.json,schema.json,files/**}\" \"../../dist/ngx-tfjs/schematics\"",
+    "postbuild": "npm run schematics:build:copy"
+  },
   "peerDependencies": {
-    "@angular/common": "^11.1.2",
-    "@angular/core": "^11.1.2"
+    "@angular/common": ">=10",
+    "@angular/core": ">=10"
+  },
+  "schematics": "./schematics/collection.json",
+  "ng-add": {
+    "save": "dependencies"
   },
   "dependencies": {
     "tslib": "^2.0.0"
+  },
+  "devDependencies": {
+    "cpx": "^1.5.0"
   }
 }

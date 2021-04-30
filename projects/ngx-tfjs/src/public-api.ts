@@ -2,6 +2,8 @@
  * Public API Surface of ngx-sentiment
  */
 
+export { TFJSModule } from './lib/tfjs.module';
+
 export { Label, Prediction, ToxicityService } from './lib/toxicity/toxicity.service';
 export { ToxicityPipe, Value } from './lib/toxicity/toxicity.pipe';
 export { ToxicityModule } from './lib/toxicity/toxicity.module';
