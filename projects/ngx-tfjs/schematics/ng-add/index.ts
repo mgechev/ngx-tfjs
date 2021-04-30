@@ -46,11 +46,11 @@ export function getProjectTargetOptions(
 
 export function ngAdd(options: Schema) {
   return async (host: Tree, context: SchematicContext) => {
-    console.log('📦', 'Adding the package to your dependencies...')
+    context.logger.info('📦 Adding the package to your dependencies...');
     context.addTask(new NodePackageInstallTask());
 
     // Add the `TFJSModule` to `AppModule`.
-    console.log('🤖', 'Adding TensorFlow.js bindings to your app...')
+    context.logger.info('🤖 Adding TensorFlow.js bindings to your app...')
     const workspace = await getWorkspace(host);
     const project = getProjectFromWorkspace(workspace, options.project);
     const buildOptions = getProjectTargetOptions(project, 'build');
@@ -69,7 +69,7 @@ export function ngAdd(options: Schema) {
 
     const appModule = host.read(appModulePath);
     if (!appModule) {
-      console.log('⚠️', 'Make sure you add TFJSModule from ngx-tfjs to your AppModule.')
+      context.logger.info('⚠️ Make sure you add TFJSModule from ngx-tfjs to your AppModule.')
       return host;
     }
 
@@ -89,7 +89,7 @@ export function ngAdd(options: Schema) {
     const recorder = host.beginUpdate(appModulePath);
     applyToUpdateRecorder(recorder, changes);
     host.commitUpdate(recorder);
-    console.log('✨', 'You are all set to make your apps smarter!')
+    context.logger.info('✨ You are all set to make your apps smarter!')
 
     return host;
   };
