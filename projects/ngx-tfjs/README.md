@@ -8,6 +8,29 @@ This project contains Angular bindings for TensorFlow.js models. The library sim
 
 ## Usage
 
+* Add to your project:
+
+```shell
+ng add ngx-tfjs
+```
+
+The schematics will:
+- Install the package
+- Add it to your `package.json`
+- Add the `TFJSModule` to your `app.module.ts`
+
+In your `app.component.html` try the models by:
+
+```html
+{{ 'you suck' | toxicity | async | json }}
+```
+
+The toxicity model will categorize the string `'you suck'` as toxic ✨.
+
+**You're done!**
+
+### Manual
+
 * Install:
 
 ```
@@ -17,7 +40,7 @@ yarn add ngx-tfjs
 * Import:
 
 ```ts
-import { ToxicityModule } from 'ngx-tfjx';
+import { ToxicityModule } from 'ngx-tfjs';
 
 @NgModule({
   imports: [ToxicityModule]
@@ -52,7 +75,7 @@ The model also provides a pipe and a service for answering questions based on a 
 * Import:
 
 ```ts
-import { QnAModule } from 'ngx-tfjx';
+import { QnAModule } from 'ngx-tfjs';
 
 @NgModule({
   imports: [QnAModule]
@@ -64,26 +87,6 @@ export class AppComponent {}
 
 ```ts
 {{ text | qna: question | async | json }}
-```
-
-## Developing
-
-Use the default project in the application to test with an existing app. Make sure you first build the library before the app:
-
-```shell
-$ ng build --configuration development ngx-tfjs
-$ ng serve
-```
-
-To publish the library:
-
-```shell
-$ cd projects/ngx-tfjs
-# Edit the version
-$ vim package.json
-$ npm run build
-$ cd ../../dist/ngx-tfjs
-$ npm publish
 ```
 
 ## License
