@@ -1,8 +1,17 @@
 {
   "name": "ngx-tfjs",
-  "version": "0.0.2",
+  "version": "0.0.1",
+  "repository": {
+    "url": "https://github.com/mgechev/ngx-tfjs"
+  },
+  "author": {
+    "name": "Minko Gechev",
+    "email": "mgechev@gmail.com",
+    "url": "https://blog.mgechev.com"
+  },
   "scripts": {
     "build": "ng build ngx-tfjs --configuration=production && ../../node_modules/.bin/tsc -p tsconfig.schematics.json",
+    "test": "jasmine-node",
     "schematics:build:copy": "cpx \"schematics/**/{collection.json,schema.json,files/**}\" \"../../dist/ngx-tfjs/schematics\"",
     "postbuild": "npm run schematics:build:copy"
   },
