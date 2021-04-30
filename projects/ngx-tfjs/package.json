@@ -1,6 +1,6 @@
 {
   "name": "ngx-tfjs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "build": "ng build ngx-tfjs --configuration=production && ../../node_modules/.bin/tsc -p tsconfig.schematics.json",
     "schematics:build:copy": "cpx \"schematics/**/{collection.json,schema.json,files/**}\" \"../../dist/ngx-tfjs/schematics\"",
