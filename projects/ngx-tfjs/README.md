@@ -82,7 +82,7 @@ $ cd projects/ngx-tfjs
 # Edit the version
 $ vim package.json
 $ npm run build
-$ cd dist/projects/ngx-tfjs
+$ cd ../../dist/ngx-tfjs
 $ npm publish
 ```
 
